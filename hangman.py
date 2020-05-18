@@ -22,6 +22,13 @@ import shelve
 import pyinputplus as pyip
 
 # FUNCTIONS
+
+def addNewPassword():
+    # this function get password from the user and add to passwords database
+    passwordsDB = shelve.open('passwords')
+    newPassword = pyip.inputStr('Provide new password: ')
+    # HERE YOU HAVE TO THINK
+
 def printMenu():
     print('\n')
     print('1. PLAY HANGMAN')
@@ -38,8 +45,7 @@ menuChoice = ''
 while game:
     printMenu()
     menuChoice = pyip.inputChoice(['1', '2', '3', '4', 'PLAY HANGMAN', 'HANGMAN', 'ADD NEW PASSWORD', 'NEW PASSWORD', 'PASSWORD', 'ADD PASSWORD', 'DISPLAY PASSWORDS AMOUNT', 'DISPLAY PASSWORDS', 'DISPLAY', 'EXIT'], prompt='')
-    print(menuChoice)
     if menuChoice == '4' or menuChoice == 'EXIT':
         game = False
-    elif menuChoice == '2' or menuChoice == 'ADD NEW PASSWORD', 'NEW PASSWORD', 'PASSWORD', 'ADD PASSWORD':
-        newPassword = inputStr('Provide new password: ')
+    elif menuChoice == '2' or menuChoice == 'ADD NEW PASSWORD' or menuChoice == 'NEW PASSWORD' or menuChoice == 'PASSWORD' or menuChoice == 'ADD PASSWORD':
+        newPassword = pyip.inputStr('Provide new password: ')
