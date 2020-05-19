@@ -27,7 +27,16 @@ def addNewPassword():
     # this function get password from the user and add to passwords database
     passwordsDB = shelve.open('passwords')
     newPassword = pyip.inputStr('Provide new password: ')
-    # HERE YOU HAVE TO THINK
+    # check if passwords key in DB exist, if no create it
+    if 'passwords' not in list(passwordsDB.keys()):
+        passwordsDB['passwords'] = []
+        # add new password
+    temp = passwordsDB['passwords']
+    temp.append(newPassword)
+    passwordsDB['passwords'] = temp
+
+    print(passwordsDB['passwords'])
+    passwordsDB.close()    
 
 def printMenu():
     print('\n')
@@ -48,4 +57,4 @@ while game:
     if menuChoice == '4' or menuChoice == 'EXIT':
         game = False
     elif menuChoice == '2' or menuChoice == 'ADD NEW PASSWORD' or menuChoice == 'NEW PASSWORD' or menuChoice == 'PASSWORD' or menuChoice == 'ADD PASSWORD':
-        newPassword = pyip.inputStr('Provide new password: ')
+        addNewPassword()
