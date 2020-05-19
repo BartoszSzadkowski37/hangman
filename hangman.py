@@ -34,7 +34,6 @@ def addNewPassword():
     temp = passwordsDB['passwords']
     temp.append(newPassword)
     passwordsDB['passwords'] = temp
-
     print('Passwords database has been updated')
     passwordsDB.close()    
 
@@ -46,6 +45,15 @@ def printMenu():
     print('4. EXIT')
     print('\n')
 
+    '''
+    MANAGE PASSWORDS
+    1. SHOW PASSWORDS LIST
+    2. ASK IF YOU WANT TO DELETE SOME PASSWORD? (Y/N)
+    3. IF YES PROVIDE PASSWORD TO DELETE
+    4. 
+
+    '''
+
 def managePasswords():
     print('\n')
     passwordsDB = shelve.open('passwords')
@@ -54,6 +62,9 @@ def managePasswords():
     else:
         for i in range(len(list(passwordsDB['passwords']))):
             print(i + 1, passwordsDB['passwords'][i])
+   #     ifDelete = pyip.inputYesNo('Do you want to delete some password?')
+   #     if ifDelete == 'y':
+   #         passwordDel = pyip.inputStr('Provide password to delete: ')
 
     passwordsDB.close()
 
