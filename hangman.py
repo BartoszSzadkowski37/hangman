@@ -35,16 +35,28 @@ def addNewPassword():
     temp.append(newPassword)
     passwordsDB['passwords'] = temp
 
-    print(passwordsDB['passwords'])
+    print('Passwords database has been updated')
     passwordsDB.close()    
 
 def printMenu():
     print('\n')
     print('1. PLAY HANGMAN')
     print('2. ADD NEW PASSWORD')
-    print('3. DISPLAY PASSWORDS AMOUNT')
+    print('3. MANAGE PASSWORDS')
     print('4. EXIT')
     print('\n')
+
+def managePasswords():
+    print('\n')
+    passwordsDB = shelve.open('passwords')
+    if 'passwords' not in list(passwordsDB.keys()):
+        print('Passwords DB is empty')
+    else:
+        for i in range(len(list(passwordsDB['passwords']))):
+            print(i + 1, passwordsDB['passwords'][i])
+
+    passwordsDB.close()
+
 
 game = True
 
@@ -58,3 +70,5 @@ while game:
         game = False
     elif menuChoice == '2' or menuChoice == 'ADD NEW PASSWORD' or menuChoice == 'NEW PASSWORD' or menuChoice == 'PASSWORD' or menuChoice == 'ADD PASSWORD':
         addNewPassword()
+    elif menuChoice == '3' or menuChoice == 'MANAGE PASSWORDS' or menuChoice == 'MANAGE':
+        managePasswords()
