@@ -56,15 +56,24 @@ def printMenu():
 
 def managePasswords():
     print('\n')
+    # Open shelve file and check if passwords DB exist
     passwordsDB = shelve.open('passwords')
     if 'passwords' not in list(passwordsDB.keys()):
         print('Passwords DB is empty')
     else:
+        # if exist print numbered list of passwords
         for i in range(len(list(passwordsDB['passwords']))):
             print(i + 1, passwordsDB['passwords'][i])
-   #     ifDelete = pyip.inputYesNo('Do you want to delete some password?')
-   #     if ifDelete == 'y':
-   #         passwordDel = pyip.inputStr('Provide password to delete: ')
+        # ask if delete some password
+        ifDelete = pyip.inputYesNo('Do you want to delete some password?')
+        if ifDelete == 'yes':
+            # get number of password to delete
+            passwordDel = pyip.inputInt('Provide number of password to delete: ', min = 0, max = len(list(passwordsDB['passwords'])))
+            # it has to be temp value used because deleting on original shelve value doesn't work
+            temp = passwordsDB['passwords']
+            del temp[passwordDel - 1]
+            passwordsDB['passwords'] = temp
+        print('Passwords database has been updated')
 
     passwordsDB.close()
 
