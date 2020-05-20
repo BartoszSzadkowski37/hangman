@@ -22,8 +22,22 @@
 # IMPORT MODULES
 import shelve
 import pyinputplus as pyip
+import random
 
 # FUNCTIONS
+
+def randomizePassword():
+    randomPassword = ''
+    passwordsDB = shelve.open('passwords')
+    if 'passwords' not in list(passwordsDB.keys()):
+        print('Passwords DB is empty')
+    
+    else:
+        randomPassword = passwordsDB['passwords'][random.randint(0, len(list(passwordsDB['passwords'])) - 1)]
+        
+    return randomPassword
+
+
 
 def printHangman(mistakes):
     if mistakes == 1:
@@ -193,3 +207,4 @@ while game:
     elif menuChoice == '1' or menuChoice == 'PLAY' or menuChoice == 'HANGMAN' or menuChoice == 'PLAY HANGMAN':
         for i in range(8):
             printHangman(i)
+            print(randomizePassword())
