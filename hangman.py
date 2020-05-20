@@ -17,12 +17,110 @@
 # GET LETTERS FROM THE USER
 # IF CORRECT --> CHANGE SIGN, ELSE --> DISPLAY THE HANGMAN
 
+
+
 # IMPORT MODULES
 import shelve
 import pyinputplus as pyip
 
 # FUNCTIONS
 
+def printHangman(mistakes):
+    if mistakes == 1:
+      print(''' 
+**************
+*            |
+*
+*
+*
+*
+*
+*
+*
+************************
+                ''')
+    elif mistakes == 2:
+        print(''' 
+**************
+*            |
+*            @
+*
+*
+*
+*
+*
+*
+************************
+                ''')
+
+    elif mistakes == 3:
+        print(''' 
+**************
+*            |
+*            @
+*            |
+*
+*
+*
+*
+*
+************************
+                ''')
+
+    elif mistakes == 4:
+        print(''' 
+**************
+*            |
+*            @
+*           /|
+*
+*
+*
+*
+*
+************************
+                ''')
+
+    elif mistakes == 5:
+        print(''' 
+**************
+*            |
+*            @
+*           /|\\
+*
+*
+*
+*
+*
+************************
+                ''')
+
+    elif mistakes == 6:
+        print(''' 
+**************
+*            |
+*            @
+*           /|\\
+*           /
+*
+*
+*
+*
+************************
+                ''')
+    elif mistakes == 7:
+        print(''' 
+**************
+*            |
+*            @
+*           /|\\
+*           / \\
+*
+*
+*
+*
+************************
+                ''')
 def addNewPassword():
     # this function get password from the user and add to passwords database
     passwordsDB = shelve.open('passwords')
@@ -92,3 +190,6 @@ while game:
         addNewPassword()
     elif menuChoice == '3' or menuChoice == 'MANAGE PASSWORDS' or menuChoice == 'MANAGE':
         managePasswords()
+    elif menuChoice == '1' or menuChoice == 'PLAY' or menuChoice == 'HANGMAN' or menuChoice == 'PLAY HANGMAN':
+        for i in range(8):
+            printHangman(i)
