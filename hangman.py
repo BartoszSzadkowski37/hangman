@@ -26,6 +26,7 @@ import random
 
 # FUNCTIONS
 
+# this function randomize password from DB and return this password
 def randomizePassword():
     randomPassword = ''
     passwordsDB = shelve.open('passwords')
@@ -34,9 +35,19 @@ def randomizePassword():
     
     else:
         randomPassword = passwordsDB['passwords'][random.randint(0, len(list(passwordsDB['passwords'])) - 1)]
-        
+    
+    passwordsDB.close()
     return randomPassword
 
+# this function takes password as argument and hash it and return secret password
+def hidePassword(password):
+    secretPassword = ''
+    for i in range(len(password)):
+        if password[i] != ' ':
+            secretPassword += '_'
+        else:
+            secretPassword += ' '
+    return secretPassword
 
 
 def printHangman(mistakes):
@@ -207,4 +218,7 @@ while game:
     elif menuChoice == '1' or menuChoice == 'PLAY' or menuChoice == 'HANGMAN' or menuChoice == 'PLAY HANGMAN':
         for i in range(8):
             printHangman(i)
-            print(randomizePassword())
+        ps = randomizePassword()
+        print(ps)
+        hps = hidePassword(ps)
+        print(hps)
