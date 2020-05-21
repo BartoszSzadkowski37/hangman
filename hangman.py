@@ -49,9 +49,42 @@ def hidePassword(password):
             secretPassword += ' '
     return secretPassword
 
+# this function check user answer with password, if correct change sign in hidePassword, if not mistakes is upgrade by one
+def checkAnswer(password, hidePassword, answer, mistakes):
+    # change hidePassword for list, because string doesn't support item assignment
+    hidePassword = list(hidePassword)
+    correct = False
+    for i in range(len(password)):
+
+        if password[i] == answer.upper():
+            hidePassword[i] = answer.upper()
+            correct = True            
+    hidePassword = ''.join(hidePassword)
+    if correct == False:
+        mistakes += 1
+
+def playHangman():
+    # randomize password and hide it
+    password = randomizePassword()
+    password = password.upper()
+    secretPassword = hidePassword(password)
+
+    # amount of mistakes
+    mistakes = 0
+
+    # main loop when mistakes will be more than 5 game over
+    while mistakes < 6:
+
+        printHangman(mistakes)
+        print(secretPassword)
+        
+        userAnswer = pyip.inputStr('Provide letter: ')
+
+
+
 
 def printHangman(mistakes):
-    if mistakes == 1:
+    if mistakes == 0:
       print(''' 
 **************
 *            |
@@ -64,12 +97,26 @@ def printHangman(mistakes):
 *
 ************************
                 ''')
-    elif mistakes == 2:
+    elif mistakes == 1:
         print(''' 
 **************
 *            |
 *            @
 *
+*
+*
+*
+*
+*
+************************
+                ''')
+
+    elif mistakes == 2:
+        print(''' 
+**************
+*            |
+*            @
+*            |
 *
 *
 *
@@ -83,7 +130,7 @@ def printHangman(mistakes):
 **************
 *            |
 *            @
-*            |
+*           /|
 *
 *
 *
@@ -97,7 +144,7 @@ def printHangman(mistakes):
 **************
 *            |
 *            @
-*           /|
+*           /|\\
 *
 *
 *
@@ -112,20 +159,6 @@ def printHangman(mistakes):
 *            |
 *            @
 *           /|\\
-*
-*
-*
-*
-*
-************************
-                ''')
-
-    elif mistakes == 6:
-        print(''' 
-**************
-*            |
-*            @
-*           /|\\
 *           /
 *
 *
@@ -133,7 +166,7 @@ def printHangman(mistakes):
 *
 ************************
                 ''')
-    elif mistakes == 7:
+    elif mistakes == 6:
         print(''' 
 **************
 *            |
@@ -216,9 +249,9 @@ while game:
     elif menuChoice == '3' or menuChoice == 'MANAGE PASSWORDS' or menuChoice == 'MANAGE':
         managePasswords()
     elif menuChoice == '1' or menuChoice == 'PLAY' or menuChoice == 'HANGMAN' or menuChoice == 'PLAY HANGMAN':
-        for i in range(8):
-            printHangman(i)
-        ps = randomizePassword()
+        ps = 'elo'
+        hs = '---'
+        checkAnswer(ps, hs, 'l', 0) 
         print(ps)
-        hps = hidePassword(ps)
-        print(hps)
+        print(hs)
+
