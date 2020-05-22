@@ -75,13 +75,17 @@ def playHangman():
     printHangman(mistakes)
     print(secretPassword)
 
-
+    answersAppeared = []
 
 
     # main loop when mistakes will be more than 5 game over
     while game:
 
         userAnswer = pyip.inputStr('Provide letter: ')
+        userAnswer = userAnswer.upper()
+        # if userAnswer was not in answers which have already appeard, append it by this answer
+        if userAnswer not in answersAppeared:
+            answersAppeared.append(userAnswer)
 
         # change secretPassword to list, because function cannot change string ref by value, 
         secretPassword = list(secretPassword)
@@ -97,6 +101,8 @@ def playHangman():
         
         printHangman(mistakes)
         print(secretPassword)
+        print('This letters you provided: ', answersAppeared)
+        print('Chances you have left: ', 6 - mistakes)
 
         if secretPassword == password:
             print('Congratulations! You win!')
