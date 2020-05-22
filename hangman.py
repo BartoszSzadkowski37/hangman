@@ -49,19 +49,17 @@ def hidePassword(password):
             secretPassword += ' '
     return secretPassword
 
-# this function check user answer with password, if correct change sign in hidePassword, if not mistakes is upgrade by one
-def checkAnswer(password, hidePassword, answer, mistakes):
-    # change hidePassword for list, because string doesn't support item assignment
-    hidePassword = list(hidePassword)
-    correct = False
+# this function check user answer with password, if correct change secretPassword element for this answer and return True, else return False 
+def checkAnswer(password, hidePassword, answer):
+    
+    correct = False    
     for i in range(len(password)):
 
         if password[i] == answer.upper():
             hidePassword[i] = answer.upper()
-            correct = True            
-    hidePassword = ''.join(hidePassword)
-    if correct == False:
-        mistakes += 1
+            correct = True
+
+    return correct
 
 def playHangman():
     # randomize password and hide it
@@ -69,19 +67,45 @@ def playHangman():
     password = password.upper()
     secretPassword = hidePassword(password)
 
+    game = True
+
     # amount of mistakes
     mistakes = 0
 
-    # main loop when mistakes will be more than 5 game over
-    while mistakes < 6:
+    printHangman(mistakes)
+    print(secretPassword)
 
-        printHangman(mistakes)
-        print(secretPassword)
-        
+
+
+
+    # main loop when mistakes will be more than 5 game over
+    while game:
+
         userAnswer = pyip.inputStr('Provide letter: ')
 
+        # change secretPassword to list, because function cannot change string ref by value, 
+        secretPassword = list(secretPassword)
+        # function checking answer and assign True or False to the correct var
+        correct = checkAnswer(password, secretPassword, userAnswer)
 
+        # if answer was incorrect, mistakes amount increase by one
+        if correct == False:
+            mistakes += 1
 
+        # back secretPassword to string
+        secretPassword = ''.join(secretPassword)
+        
+        printHangman(mistakes)
+        print(secretPassword)
+
+        if secretPassword == password:
+            print('Congratulations! You win!')
+            game = False
+
+        if mistakes > 5:
+            print('You loooose')
+            game = False
+        
 
 def printHangman(mistakes):
     if mistakes == 0:
@@ -249,9 +273,4 @@ while game:
     elif menuChoice == '3' or menuChoice == 'MANAGE PASSWORDS' or menuChoice == 'MANAGE':
         managePasswords()
     elif menuChoice == '1' or menuChoice == 'PLAY' or menuChoice == 'HANGMAN' or menuChoice == 'PLAY HANGMAN':
-        ps = 'elo'
-        hs = '---'
-        checkAnswer(ps, hs, 'l', 0) 
-        print(ps)
-        print(hs)
-
+        playHangman()
